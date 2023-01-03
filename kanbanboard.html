@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <style>
+            .row{
+                display: flex;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="text" name="add_data" id="add_data"/>
+        <input type="button" id="datas" value="Add" onclick="Adddata()"/>
+
+        <div class="row">
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                        <th>Move To</th>
+                    </tr>
+                </thead>
+                <tbody id="lists"></tbody>
+            </table>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                        <th>Move To</th>
+                    </tr>
+                </thead>
+                <tbody id="lists1"></tbody>
+            </table>
+        </div>
+        &nbsp;&nbsp;&nbsp;
+        <div>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="lists2"></tbody>
+            </table>
+        </div>
+        </div>
+
+        <script>
+            var listarray=[];
+            var listarray1=[];
+            var listarray2=[];
+
+            function Adddata(){
+            var add_data=document.getElementById("add_data").value;
+            var lists_length=listarray.length;
+            var lists1_length=listarray1.length;
+            var lists2_length=listarray2.length;
+
+            if(add_data=="" || add_data=="null")
+            {
+                alert("enter a value")
+            }
+
+            else if(lists_length>=2){
+
+                if(lists1_length>=2){
+                    listarray2.push(add_data);
+                    document.getElementById('add_data').value="";
+                    display2();
+                    
+                if(lists2_length>=2)
+                    {
+                        alert("Over Flow");
+                        delete_list2();
+                    }                  
+                }            
+                else {
+                    listarray1.push(add_data);
+                    document.getElementById('add_data').value="";
+                    display1();
+                }
+                
+            }
+            else{
+                listarray.push(add_data);
+                document.getElementById('add_data').value="";
+                display();
+            }
+        }
+
+        function display(){
+                var ab='';
+                var bc=0;
+                listarray.forEach(function(value,index){
+                        bc=bc+1;
+                        ab+='<tr>';
+                        ab+='<td>'+bc+'</td>';
+                        ab+='<td>'+value+'</td>';
+                        ab+='<td><a onClick="delete_list('+index+')">Delete</a></td>';
+                        ab+='<td><a onClick="Move_on('+index+')">Move On</a></td>';
+                        ab+='</tr>';
+                })
+                document.getElementById("lists").innerHTML=ab;
+        }
+        function Move_on(id){
+            listarray1.push(listarray[id]);
+            display1();
+            delete_list();
+
+        }
+        function delete_list(id){
+            listarray.splice(id,1);
+            display();
+        }
+       
+        function display1(){
+                var cd='';
+                var gh=0;
+                listarray1.forEach(function(value,index){
+                        gh=gh+1;
+                        cd+='<tr>';
+                        cd+='<td>'+gh+'</td>';
+                        cd+='<td>'+value+'</td>';
+                        cd+='<td><a onClick="delete_list1('+index+')">Delete</a></td>';
+                        cd+='<td><a onClick="Move_on1('+index+')">Move On</a></td>';
+                        cd+='</tr>';
+                })
+                document.getElementById("lists1").innerHTML=cd;
+        }
+
+        function Move_on1(id){
+            listarray2.push(listarray1[id]);
+            display2();
+            delete_list1();
+        }
+        function delete_list1(id){
+            listarray1.splice(id,1);
+            display1();
+        }
+        
+        function display2(){
+                var ef='';
+                var ij=0;
+                listarray2.forEach(function(value,index){
+                        ij=ij+1;
+                        ef+='<tr>';
+                        ef+='<td>'+ij+'</td>';
+                        ef+='<td>'+value+'</td>';
+                        ef+='<td><a onClick="delete_list2('+index+')">Delete</a></td>';
+                        ef+='</tr>';
+                })
+                document.getElementById("lists2").innerHTML=ef;
+        }
+        function delete_list2(id){
+            listarray2.splice(id,1);
+            display2();
+        }
+        </script>
+    </body>
+</html>
